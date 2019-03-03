@@ -3281,19 +3281,19 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test */ \"./src/js/test.js\");\n// Global app controller\n\nvar x = 23;\nconsole.log(\"I imported \".concat(_test__WEBPACK_IMPORTED_MODULE_0__[\"default\"], \" fron another module variable is : \").concat(x));\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _views_SearchView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/SearchView */ \"./src/js/views/SearchView.js\");\n\nconsole.log(\"Using importet funcions! \".concat(Object(_views_SearchView__WEBPACK_IMPORTED_MODULE_0__[\"add\"])(4, 4), \" and \").concat(Object(_views_SearchView__WEBPACK_IMPORTED_MODULE_0__[\"multiply\"])(2, 3)));\n\n//# sourceURL=webpack:///./src/js/index.js?");
 
 /***/ }),
 
-/***/ "./src/js/test.js":
-/*!************************!*\
-  !*** ./src/js/test.js ***!
-  \************************/
-/*! exports provided: default */
+/***/ "./src/js/views/SearchView.js":
+/*!************************************!*\
+  !*** ./src/js/views/SearchView.js ***!
+  \************************************/
+/*! exports provided: add, multiply */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconsole.log('Imported module');\n/* harmony default export */ __webpack_exports__[\"default\"] = (23);\n\n//# sourceURL=webpack:///./src/js/test.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"add\", function() { return add; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"multiply\", function() { return multiply; });\nvar add = function add(a, b) {\n  return a + b;\n};\nvar multiply = function multiply(a, b) {\n  return a * b;\n};\n\n//# sourceURL=webpack:///./src/js/views/SearchView.js?");
 
 /***/ }),
 
