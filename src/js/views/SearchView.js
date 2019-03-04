@@ -1,15 +1,18 @@
 import {elements} from "./Base";
 
-export const getInput = () => elements.searchInput.value;
+const PREVIEW_BUTTON = 'prev';
+const NEXT_BUTTON = 'next';
 
+export const getInput = () => elements.searchInput.value;
 export const clearInput = () => {
     elements.searchInput.value = '';
-};
 
+};
 export const clearResult = () => {
     elements.searchResultList.innerHTML = '';
-};
+    elements.searchResultsPages.innerHTML = '';
 
+};
 const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
     if (title.length > limit) {
@@ -22,8 +25,8 @@ const limitRecipeTitle = (title, limit = 17) => {
         return `${newTitle.join(' ')}...`;
     }
     return title;
-};
 
+};
 const renderRecipe = recipe => {
     // language=HTML
     const markup = `
@@ -39,7 +42,36 @@ const renderRecipe = recipe => {
             </a>
         </li>`;
     elements.searchResultList.insertAdjacentHTML('beforeend', markup);
+
 };
-export const renderResults = recipes => {
-    recipes.forEach(recipe => renderRecipe(recipe));
+
+const createButton = (page, type) => `            
+            <rollDiceButton class="btn-inline results__btn--${type}" data-goto=${type === PREVIEW_BUTTON ? page - 1 : page + 1}>
+                <svg class="search__icon">
+                    <use href="img/icons.svg#icon-triangle-${type === PREVIEW_BUTTON ? 'left' : 'right'}"></use>
+                </svg>
+                <span>Page ${type === PREVIEW_BUTTON ? page - 1 : page + 1}</span>
+            </rollDiceButton>`;
+
+const renderButton = (page, numberOfResults, responsePerPage) => {
+    const pages = Math.ceil(numberOfResults / responsePerPage);
+    let button;
+    if (page === 1 && pages > 1) {
+        button = createButton(page, NEXT_BUTTON);
+    } else if (page < pages) {
+        button = `
+        ${createButton(page, PREVIEW_BUTTON)}
+        ${createButton(page, NEXT_BUTTON)}
+        `
+    } else if (page === pages && pages > 1) {
+        button = createButton(page, PREVIEW_BUTTON);
+    }
+    elements.searchResultsPages.insertAdjacentHTML("afterbegin", button);
+};
+
+export const renderResults = (recipes, page = 1, responsePerPage = 10) => {
+    const start = (page - 1) * responsePerPage;
+    const end = page * responsePerPage;
+    recipes.slice(start, end).forEach(recipe => renderRecipe(recipe));
+    renderButton(page, recipes.length, responsePerPage);
 };
