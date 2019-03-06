@@ -2,6 +2,7 @@ import Search from './models/Search';
 import * as searchView from './views/searchView';
 import {clearLoader, elements, renderLoader} from "./views/Base";
 import Recipe from "./models/Recipe";
+import * as recipeView from "./views/RecipeView";
 
 const BUTTON_CLASS = '.btn-inline';
 const CLICK = 'click';
@@ -52,11 +53,14 @@ const controlRecipe = async () => {
         state.recipe = new Recipe(id);
         try {
             await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
 
             state.recipe.calcTime();
             state.recipe.calculateServings();
 
             console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
         } catch (error) {
             alert('Error processing recipe')
         }
