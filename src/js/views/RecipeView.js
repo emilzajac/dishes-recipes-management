@@ -85,7 +85,7 @@ export const renderRecipe = recipe => {
                 ${recipe.ingredients.map(ingredient => createIngredient(ingredient)).join(' ')}
             </ul>
             
-            <rollDiceButton class="btn-small recipe__btn">
+            <rollDiceButton class="btn-small recipe__btn recipe__btn--add">
                 <svg class="search__icon">
                     <use href="img/icons.svg#icon-shopping-cart"></use>
                 </svg>
