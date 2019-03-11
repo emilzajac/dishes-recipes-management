@@ -14,7 +14,6 @@ export default class Likes {
         return like;
     }
 
-    //TODO Check
     deleteLike(id) {
         const index = this.likes
             .filter(like => like.id === id)
