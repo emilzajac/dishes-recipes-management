@@ -13,14 +13,13 @@ const CLICK = 'click';
 const SUBMIT = 'submit';
 
 const state = {};
-window.state = state;
 
 /**
  * Search controller
  */
 const controlSearch = async () => {
-    const query = searchView.getInput();
-    // const query = 'pizza';
+    // const query = searchView.getInput();
+    const query = 'pizza';
     if (query) {
         // New search object and add to state
         state.search = new Search(query);
@@ -35,7 +34,6 @@ const controlSearch = async () => {
 
             // Render results on UI
             clearLoader();
-            console.log(state.search.result);
             searchView.renderResults(state.search.result);
         } catch (error) {
             console.log(error);
@@ -87,14 +85,12 @@ const controlRecipe = async () => {
             state.recipe.calculateServings();
 
             // Render recipe
-            console.log(state.recipe);
             clearLoader();
             recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
         } catch (error) {
             console.log(error);
             alert('Error processing recipe')
         }
-
     }
 };
 
@@ -155,7 +151,6 @@ const controlLike = () => {
         LikesView.renderLike(newLike);
 
         // User has liked current recipe
-
     } else {
         // Remove like from state
         state.likes.deleteLike(currentId);
@@ -167,6 +162,20 @@ const controlLike = () => {
     }
     LikesView.toggleLikeMenu(state.likes.getNumberOfLikes());
 };
+
+// Restore liked recipes on page load
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+
+    // Restore likes
+    state.likes.readStorage();
+
+    // Toggle like menu rollDiceButton
+    LikesView.toggleLikeMenu(state.likes.getNumberOfLikes());
+
+    // Render the existing likes
+    state.likes.likes.forEach(like => LikesView.renderLike(like));
+});
 
 // Handling recipe button clicks
 elements.recipe.addEventListener(CLICK, event => {
@@ -187,5 +196,4 @@ elements.recipe.addEventListener(CLICK, event => {
         // Like controller
         controlLike();
     }
-    console.log(state.recipe);
 });
